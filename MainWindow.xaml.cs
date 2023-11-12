@@ -1,42 +1,63 @@
 ﻿using System;
 using System.Windows;
 
-namespace SimpleWpfResume
+namespace NumberGuessingGame
 {
     public partial class MainWindow : Window
     {
+        private int targetNumber;
+        private int attempts;
+
         public MainWindow()
         {
             InitializeComponent();
+            StartNewGame();
         }
 
-        private void ShowResumeButton_Click(object sender, RoutedEventArgs e)
+        private void StartNewGame()
         {
-            ShowResume();
+            Random random = new Random();
+            targetNumber = random.Next(1, 2001);
+            attempts = 0;
         }
 
-        private void ShowResume()
+        private void GuessButton_Click(object sender, RoutedEventArgs e)
         {
-            string resume = "My name is Viktor. I am a student. ";
-            resume += "I have experience with programming languages such as C# and C++. ";
-            resume += "I can develop applications using WPF technology.";
+            GuessNumber();
+        }
 
-            MessageBox.Show(resume, "Resume - Part 1", MessageBoxButton.OK);
+        private void GuessNumber()
+        {
+            int userGuess;
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter your guess (a number from 1 to 2000):", "Guess the Number");
 
-            resume += " I also have skills in working with databases, particularly SQL Server and MySQL. ";
-            resume += "I understand the basics of algorithms and data structures. ";
-            resume += "I am ready to learn new technologies and continuously grow professionally.";
+            if (int.TryParse(input, out userGuess))
+            {
+                attempts++;
 
-            MessageBox.Show(resume, "Resume - Part 2", MessageBoxButton.OK);
+                if (userGuess == targetNumber)
+                {
+                    MessageBox.Show($"Congratulations! You guessed the number {targetNumber} in {attempts} attempts.", "Victory!", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            resume += " I have teamwork skills, as well as experience in problem-solving and finding effective solutions. ";
-            resume += "I am ready to work in a dynamic environment and tackle challenging tasks.";
-
-            MessageBox.Show(resume, "Resume - Part 3", MessageBoxButton.OK);
-
-            int averageCharacters = resume.Length / 3;
-
-            MessageBox.Show($"Average number of characters per page: {averageCharacters}", "Statistics", MessageBoxButton.OK);
+                    if (MessageBox.Show("Want to play again?", "New Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        StartNewGame();
+                    }
+                    else
+                    {
+                        Close();
+                    }
+                }
+                else
+                {
+                    string message = userGuess < targetNumber ? "Higher!" : "Lower!";
+                    MessageBox.Show(message, "Try again", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            { 
+                MessageBox.Show("Please enter a valid number.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
