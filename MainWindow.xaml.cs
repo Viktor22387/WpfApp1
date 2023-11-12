@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
-namespace SimpleWpfResume
+namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
@@ -10,33 +11,38 @@ namespace SimpleWpfResume
             InitializeComponent();
         }
 
-        private void ShowResumeButton_Click(object sender, RoutedEventArgs e)
+        private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ShowResume();
+            Point point = e.GetPosition(Rectangle);
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                MessageBox.Show("Application is closing because Ctrl key was pressed.", "Closing", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
+            else if (point.X >= 0 && point.X <= Rectangle.ActualWidth && point.Y >= 0 && point.Y <= Rectangle.ActualHeight)
+            {
+                MessageBox.Show($"The point is inside the rectangle at coordinates ({point.X}, {point.Y}).", "Inside Rectangle", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (point.X < 0 || point.X > Rectangle.ActualWidth || point.Y < 0 || point.Y > Rectangle.ActualHeight)
+            {
+                MessageBox.Show($"The point is outside the rectangle at coordinates ({point.X}, {point.Y}).", "Outside Rectangle", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("The point is on the border of the rectangle.", "On Border", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
-        private void ShowResume()
+        private void Rectangle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            string resume = "My name is Viktor. I am a student. ";
-            resume += "I have experience with programming languages such as C# and C++. ";
-            resume += "I can develop applications using WPF technology.";
+            MessageBox.Show($"Width = {Width}, Height = {Height}", "Client Area Size", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
 
-            MessageBox.Show(resume, "Resume - Part 1", MessageBoxButton.OK);
-
-            resume += " I also have skills in working with databases, particularly SQL Server and MySQL. ";
-            resume += "I understand the basics of algorithms and data structures. ";
-            resume += "I am ready to learn new technologies and continuously grow professionally.";
-
-            MessageBox.Show(resume, "Resume - Part 2", MessageBoxButton.OK);
-
-            resume += " I have teamwork skills, as well as experience in problem-solving and finding effective solutions. ";
-            resume += "I am ready to work in a dynamic environment and tackle challenging tasks.";
-
-            MessageBox.Show(resume, "Resume - Part 3", MessageBoxButton.OK);
-
-            int averageCharacters = resume.Length / 3;
-
-            MessageBox.Show($"Average number of characters per page: {averageCharacters}", "Statistics", MessageBoxButton.OK);
+        private void Rectangle_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point point = e.GetPosition(this);
+            Title = $"Mouse Coordinates: X = {point.X}, Y = {point.Y}";
         }
     }
 }
