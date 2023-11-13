@@ -13,7 +13,6 @@ namespace PersonalInfoApp
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем введенные данные
             string lastName = LastNameTextBox.Text;
             string firstName = FirstNameTextBox.Text;
             string patronymic = PatronymicTextBox.Text;
@@ -21,10 +20,8 @@ namespace PersonalInfoApp
             DateTime birthDate = BirthDatePicker.SelectedDate ?? DateTime.MinValue;
             string maritalStatus = MaritalStatusComboBox.Text;
 
-            // Создаем строку для записи в файл
             string dataToSave = $"Фамилия: {lastName}\nИмя: {firstName}\nОтчество: {patronymic}\nПол: {gender}\nДата рождения: {birthDate}\nСемейный статус: {maritalStatus}";
 
-            // Сохраняем в файл
             SaveToFile(dataToSave);
         }
 
@@ -34,7 +31,6 @@ namespace PersonalInfoApp
             {
                 string filePath = "PersonalInfo.txt";
 
-                // Записываем данные в файл или создаем новый файл
                 using (StreamWriter sw = File.CreateText(filePath))
                 {
                     sw.Write(data);
