@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
-namespace SimpleWpfResume
+namespace TextReaderApp
 {
     public partial class MainWindow : Window
     {
@@ -10,33 +12,21 @@ namespace SimpleWpfResume
             InitializeComponent();
         }
 
-        private void ShowResumeButton_Click(object sender, RoutedEventArgs e)
+        private void ReadTextButton_Click(object sender, RoutedEventArgs e)
         {
-            ShowResume();
-        }
+            try
+            {
+                string filePath = "sample.txt";
+                string text = File.ReadAllText(filePath);
 
-        private void ShowResume()
-        {
-            string resume = "My name is Viktor. I am a student. ";
-            resume += "I have experience with programming languages such as C# and C++. ";
-            resume += "I can develop applications using WPF technology.";
+                progressBar.Value = 1;
 
-            MessageBox.Show(resume, "Resume - Part 1", MessageBoxButton.OK);
-
-            resume += " I also have skills in working with databases, particularly SQL Server and MySQL. ";
-            resume += "I understand the basics of algorithms and data structures. ";
-            resume += "I am ready to learn new technologies and continuously grow professionally.";
-
-            MessageBox.Show(resume, "Resume - Part 2", MessageBoxButton.OK);
-
-            resume += " I have teamwork skills, as well as experience in problem-solving and finding effective solutions. ";
-            resume += "I am ready to work in a dynamic environment and tackle challenging tasks.";
-
-            MessageBox.Show(resume, "Resume - Part 3", MessageBoxButton.OK);
-
-            int averageCharacters = resume.Length / 3;
-
-            MessageBox.Show($"Average number of characters per page: {averageCharacters}", "Statistics", MessageBoxButton.OK);
+                MessageBox.Show("Текст успешно прочитан из файла!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -1,11 +1,9 @@
-﻿<Window x:Class="SimpleWpfResume.MainWindow"
+﻿<Window x:Class="TextReaderApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Simple WPF Resume" Height="350" Width="525">
+        Title="Text Reader App" Height="300" Width="400">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Welcome to My Resume App!" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" />
-            <Button x:Name="ShowResumeButton" Content="Show Resume" Click="ShowResumeButton_Click" />
-        </StackPanel>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Height="20" Margin="50,50,0,0"/>
+        <Button Content="Read Text" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="30" Margin="50,100,0,0" Click="ReadTextButton_Click"/>
     </Grid>
 </Window>
